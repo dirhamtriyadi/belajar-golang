@@ -80,7 +80,7 @@ func (h *UserHandler) RegisterUser(c *fiber.Ctx) error {
 	user.Password = string(hasPassword)
 
 	// create new user
-	result, err := h.userUsecase.RegisterUser(user)
+	result, err := h.userUsecase.RegisterUser(&user)
 	if err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"status":  "error",
@@ -211,7 +211,7 @@ func (h *UserHandler) UpdateUser(c *fiber.Ctx) error {
 	}
 
 	// update user
-	result, err := h.userUsecase.UpdateUser(userID, user)
+	result, err := h.userUsecase.UpdateUser(userID, &user)
 	if err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"status":  "error",
