@@ -9,8 +9,8 @@ import (
 type UserUsecase interface {
 	RegisterUser(user entity.User) (entity.UserResponse, error)
 	FindAllUser() ([]entity.UserResponse, error)
-	FindUserByID(userID int) (entity.User, error)
-	FindUserByUsername(username string) (entity.User, error)
+	FindUserByID(userID int) (entity.UserResponse, error)
+	FindUserByUsername(username string) (entity.UserResponse, error)
 	UpdateUser(userID int, user entity.User) (entity.UserResponse, error)
 	DeleteUser(userID int) error
 }
@@ -33,11 +33,11 @@ func (u *userUsecase) FindAllUser() ([]entity.UserResponse, error) {
 	return u.userRepository.FindAllUser()
 }
 
-func (u *userUsecase) FindUserByID(userID int) (entity.User, error) {
+func (u *userUsecase) FindUserByID(userID int) (entity.UserResponse, error) {
 	return u.userRepository.FindUserByID(userID)
 }
 
-func (u *userUsecase) FindUserByUsername(username string) (entity.User, error) {
+func (u *userUsecase) FindUserByUsername(username string) (entity.UserResponse, error) {
 	return u.userRepository.FindUserByUsername(username)
 }
 
