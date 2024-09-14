@@ -9,7 +9,7 @@ import (
 // UserRepository is a contract
 type UserRepository interface {
 	CreateUser(user entity.User) (entity.UserResponse, error)
-	FindAllUser() ([]entity.User, error)
+	FindAllUser() ([]entity.UserResponse, error)
 	FindUserByID(userID int) (entity.User, error)
 	FindUserByUsername(username string) (entity.User, error)
 	UpdateUser(userID int, user entity.User) (entity.UserResponse, error)
@@ -40,14 +40,25 @@ func (r *userRepository) CreateUser(user entity.User) (entity.UserResponse, erro
 	}, nil
 }
 
-func (r *userRepository) FindAllUser() ([]entity.User, error) {
+func (r *userRepository) FindAllUser() ([]entity.UserResponse, error) {
 	var users []entity.User
+	var userResponses []entity.UserResponse
 
 	if err := r.db.Find(&users).Error; err != nil {
-		return users, err
+		return userResponses, err
 	}
 
-	return users, nil
+	for _, user := range users {
+		userResponses = append(userResponses, entity.UserResponse{
+			ID:        user.ID,
+			Username:  user.Username,
+			Email:     user.Email,
+			CreatedAt: user.CreatedAt,
+			UpdatedAt: user.UpdatedAt,
+		})
+	}
+
+	return userResponses, nil
 }
 
 func (r *userRepository) FindUserByID(userID int) (entity.User, error) {

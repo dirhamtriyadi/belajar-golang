@@ -8,7 +8,7 @@ import (
 // UserUsecase is a contract
 type UserUsecase interface {
 	RegisterUser(user entity.User) (entity.UserResponse, error)
-	FindAllUser() ([]entity.User, error)
+	FindAllUser() ([]entity.UserResponse, error)
 	FindUserByID(userID int) (entity.User, error)
 	FindUserByUsername(username string) (entity.User, error)
 	UpdateUser(userID int, user entity.User) (entity.UserResponse, error)
@@ -29,7 +29,7 @@ func (u *userUsecase) RegisterUser(user entity.User) (entity.UserResponse, error
 	return u.userRepository.CreateUser(user)
 }
 
-func (u *userUsecase) FindAllUser() ([]entity.User, error) {
+func (u *userUsecase) FindAllUser() ([]entity.UserResponse, error) {
 	return u.userRepository.FindAllUser()
 }
 
